@@ -1,8 +1,12 @@
 <?php
 
+//Admin
+use App\Http\Controllers\admin\HeroController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\admin\ProfileController as AdminProfileController;
+
+//User
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\frontend\FrontendController;
 use App\Http\Controllers\frontend\ProfileController;
@@ -50,6 +54,7 @@ Route::group(['prefix' => 'account'], function () {
 Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['middleware' => 'admin.guest'], function () {
+        //Login Routes
         Route::get('login', [AdminLoginController::class, 'index'])->name('admin.login');
         Route::post('authenticate', [AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
         Route::get('password-request', [AdminLoginController::class, 'passwordRequest'])->name('admin.password.request');
@@ -57,13 +62,19 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::group(['middleware' => 'admin.auth'], function () {
+
+        //Dashboard Routes
         Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+
+        // Profile Routes
         Route::get('profile', [AdminProfileController::class, 'index'])->name('admin.profile');
         Route::put('profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
         Route::put('password-update', [AdminProfileController::class, 'passwordUpdate'])->name('admin.profile.passwordUpdate');
 
-
+        //Hero Routes
+        Route::get('/hero',[HeroController::class,'index'])->name('admin.hero.index');
+        Route::put('/hero',[HeroController::class,'update'])->name('admin.hero.update');
     });
 
 });
