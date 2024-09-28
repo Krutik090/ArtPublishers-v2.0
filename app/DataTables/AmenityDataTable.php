@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Category;
+use App\Models\Amenity;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CategoryDataTable extends DataTable
+class AmenityDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,24 +22,14 @@ class CategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($query){
-                $edit = '<a href="'.route('category.edit',$query->id).'" class="btn btn-md btn-primary" ><i class="fas fa-edit"></i></a>';
-                $delete = '<a href="'.route('category.destroy',$query->id).'" class="delete-item btn btn-md btn-danger ml-3" ><i class="fas fa-trash-alt"></i></a>';
+        ->addColumn('action', function($query){
+            $edit = '<a href="'.route('amenity.edit',$query->id).'" class="btn btn-md btn-primary" ><i class="fas fa-edit"></i></a>';
+            $delete = '<a href="'.route('amenity.destroy',$query->id).'" class="delete-item btn btn-md btn-danger ml-3" ><i class="fas fa-trash-alt"></i></a>';
 
-                return $edit.$delete;
-            })
+            return $edit.$delete;
+        })
             ->addColumn('icon',function($query){
-                return '<img src="'.asset($query->image_icon).' " hight="75px" width="75px"></img>';
-            })
-            ->addColumn('background',function($query){
-                return '<img src="'.asset($query->bg_image).' " hight="150px" width="210px"></img>';
-            })
-            ->addColumn('show_at_home',function($query){
-                if($query->show_at_home == 1){
-                    return '<span class="badge badge-primary">Yes</span>';
-                }else{
-                    return '<span class="badge badge-danger">No</span>';
-                }
+                return '<i class="'.$query->icon.'" style="font-size:40px"></i>';
             })
             ->addColumn('status',function($query){
                 if($query->status == 1){
@@ -48,14 +38,14 @@ class CategoryDataTable extends DataTable
                     return '<span class="badge badge-danger">Inactive</span>';
                 }
             })
-            ->rawColumns(['icon','background','action','show_at_home','status'])
+            ->rawColumns(['icon','action','status'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Category $model): QueryBuilder
+    public function query(Amenity $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -66,12 +56,13 @@ class CategoryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('category-table')
+                    ->setTableId('amenity-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
                     ->orderBy(0)
                     ->selectStyleSingle();
+
     }
 
     /**
@@ -81,11 +72,9 @@ class CategoryDataTable extends DataTable
     {
         return [
             Column::make('id')->width(100)->addClass('text-center'),
+            Column::make('icon')->width(200)->addClass('text-center'),
             Column::make('name')->width(200)->addClass('text-center'),
-            Column::make('icon')->addClass('text-center'),
-            Column::make('background')->addClass('text-center'),
-            Column::make('show_at_home')->width(200)->addClass('text-center'),
-            Column::make('status')->width(200),
+            Column::make('status')->width(200)->addClass('text-center'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
@@ -99,6 +88,6 @@ class CategoryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Category_' . date('YmdHis');
+        return 'Amenity_' . date('YmdHis');
     }
 }

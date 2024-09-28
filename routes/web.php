@@ -1,6 +1,7 @@
 <?php
 
 //Admin
+use App\Http\Controllers\admin\AmenitiyController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HeroController;
 use App\Http\Controllers\admin\LocationController;
@@ -80,7 +81,12 @@ Route::group(['prefix' => 'admin'], function () {
 
         //category Routes
         Route::resource('category',CategoryController::class)->except(['show']);
+
+        //location Routes
         Route::resource('location',LocationController::class)->except(['show']);
+
+        // Amenity Routes
+        Route::resource('amenity',AmenitiyController::class)->except(['show']);
     });
 
 });
