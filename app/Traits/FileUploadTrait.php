@@ -7,19 +7,19 @@ use File;
 
 trait FileUploadTrait
 {
-    function uploadImage(Request $request, string $inputName, ?string $oldpath = null, string $path = '/uploads') : ?string
+    function uploadImage(Request $request, string $inputName, ?string $oldpath = null, string $path = '/uploads'): ?string
     {
-        if($request->hasFile($inputName)){
+        if ($request->hasFile($inputName)) {
             $image = $request->{$inputName};
             $ext = $image->getClientOriginalExtension(); //png jpg
             $imageName = 'media_' . uniqid() . '.' . $ext;
 
-            $image->move(public_path($path),$imageName);
+            $image->move(public_path($path), $imageName);
 
             //Delete Old Image
             $excludedFolder = '/default';
 
-            if($oldpath && File::exists(public_path($oldpath)) && strpos($oldpath,$excludedFolder) !== 0){
+            if ($oldpath && File::exists(public_path($oldpath)) && strpos($oldpath, $excludedFolder) !== 0) {
                 File::delete(public_path($oldpath));
             }
 
@@ -29,12 +29,41 @@ trait FileUploadTrait
         return null;
     }
 
-    function deleteFile($path): void{
+    function uploadMultipleImage(Request $request, string $inputName, string $path = '/uploads'): ?array
+    {
+        if ($request->hasFile($inputName)) {
+
+            $images = $request->{$inputName};
+
+            $paths = [];
+
+            foreach($images as $image) {
+
+                $ext = $image->getClientOriginalExtension(); //png jpg
+                $imageName = 'media_' . uniqid() . '.' . $ext;
+
+                $image->move(public_path($path), $imageName);
+
+                $paths[] = $path . '/' . $imageName;
+            }
+            return $paths;
+        }
+
+        return null;
+
+    }
+
+
+
+
+    function deleteFile($path): void
+    {
         //Delete  Image
         $excludedFolder = '/default';
 
-        if($path && File::exists(public_path($path)) && strpos($path,$excludedFolder) !== 0){
+        if ($path && File::exists(public_path($path)) && strpos($path, $excludedFolder) !== 0) {
             File::delete(public_path($path));
         }
     }
+
 }

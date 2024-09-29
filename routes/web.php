@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\AmenitiyController;
 use App\Http\Controllers\admin\ArtController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HeroController;
+use App\Http\Controllers\admin\ImageGalleryController;
 use App\Http\Controllers\admin\LocationController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\frontend\FrontendController;
 use App\Http\Controllers\frontend\ProfileController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\PasswordResetLinkController;
+use App\Http\Controllers\admin\VideoGalleryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
@@ -91,6 +93,12 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Arts Routes
         Route::resource('arts',ArtController::class)->except(['show']);
+
+        // Image Gallery Routes
+        Route::resource('image-gallery',ImageGalleryController::class)->except(['show']);
+
+        // Image Gallery Routes
+        Route::resource('video-gallery',VideoGalleryController::class)->except(['show']);
     });
 
 });

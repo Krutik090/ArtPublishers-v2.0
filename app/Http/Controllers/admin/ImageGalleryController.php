@@ -3,24 +3,20 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ImageGallery;
+use App\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 
 class ImageGalleryController extends Controller
 {
+    use FileUploadTrait;
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $images = ImageGallery::where('art_id', $request->id)->get();
+        return view('admin.image-gallery.index',compact('images'));
     }
 
     /**
@@ -28,31 +24,29 @@ class ImageGalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate(
+            [
+                'images' => ['required'],
+                'images.*' => ['image', 'max:7000'],
+                'art_id' => ['required']
+            ],[
+                'images.*.image' => 'One or more selected files are not valid images',
+                'images.*.max' => 'One or more selected files exceed the maximum file size(7MB)',
+            ]
+        );
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $imagepaths = $this->uploadMultipleImage($request,'images');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        foreach($imagepaths as $path){
+            $image = new ImageGallery();
+            $image->art_id = $request->art_id;
+            $image->image = $path;
+            $image->save();
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        toastr()->success("Uploaded Successfully");
+
+        return redirect()->back();
     }
 
     /**
@@ -60,6 +54,20 @@ class ImageGalleryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+
+            $image = ImageGallery::findOrFail($id);
+            $this->deleteFile($image->image);
+            $image->delete();
+
+            return response(['status' => 'success','message' => 'Deleted Successfully']);
+
+        }
+        catch(\Exception $e){
+
+            logger($e);
+            return response(['status' => 'error','message' => $e->getMessage()]);
+
+        }
     }
 }

@@ -102,8 +102,8 @@ class ArtController extends Controller
         $category = Category::all();
         $location = Location::all();
         $amenity = Amenity::all();
-        $artamenity = ArtAmenities::where('art_id',$arts->id)->pluck('amenity_id')->toArray();
-        return view('admin.arts.edit', compact('arts', 'location', 'amenity', 'category','artamenity'));
+        $artamenity = ArtAmenities::where('art_id', $arts->id)->pluck('amenity_id')->toArray();
+        return view('admin.arts.edit', compact('arts', 'location', 'amenity', 'category', 'artamenity'));
     }
 
     /**
@@ -113,13 +113,13 @@ class ArtController extends Controller
     {
         $art = Arts::findOrFail($id);
 
-        $imagePath = $this->uploadImage($request, 'image',$request->old_image);
-        $thumbanilPath = $this->uploadImage($request, 'thb_image',$request->old_thb_image);
-        $attachmentPath = $this->uploadImage($request, 'attachment',$request->old_attachment);
+        $imagePath = $this->uploadImage($request, 'image', $request->old_image);
+        $thumbanilPath = $this->uploadImage($request, 'thb_image', $request->old_thb_image);
+        $attachmentPath = $this->uploadImage($request, 'attachment', $request->old_attachment);
 
         $art->user_id = Auth::guard('admin')->user()->id;
-        $art->image = !empty($imagePath)? $imagePath : $request->old_image;
-        $art->thumbnail =  !empty($thumbanilPath)? $thumbanilPath : $request->old_thb_image;
+        $art->image = !empty($imagePath) ? $imagePath : $request->old_image;
+        $art->thumbnail = !empty($thumbanilPath) ? $thumbanilPath : $request->old_thb_image;
         $art->title = $request->title;
         $art->slug = Str::slug($request->title);
         $art->package_id = 0;
@@ -132,7 +132,7 @@ class ArtController extends Controller
         $art->fb_link = $request->fb_link;
         $art->x_link = $request->x_link;
         $art->insta_link = $request->insta_link;
-        $art->file = !empty($attachmentPath)? $attachmentPath : $request->old_attachment;
+        $art->file = !empty($attachmentPath) ? $attachmentPath : $request->old_attachment;
         $art->description = $request->description;
         $art->google_map_link = $request->google_map;
         $art->seo_title = $request->seo_title;
@@ -144,14 +144,14 @@ class ArtController extends Controller
 
         $art->save();
 
-        ArtAmenities::where('art_id',$art->id)->delete();
-        if(!empty($request->amenities)){
+        ArtAmenities::where('art_id', $art->id)->delete();
+        if (!empty($request->amenities)) {
             foreach ($request->amenities as $amenityId) {
                 $amenity = new ArtAmenities();
                 $amenity->art_id = $art->id;
                 $amenity->amenity_id = $amenityId;
                 $amenity->save();
-        }
+            }
 
 
         }
@@ -166,6 +166,16 @@ class ArtController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            Arts::findOrFail($id)->delete();
+
+            return response(['status' => 'success', 'message' => 'Deleted Successfully']);
+
+        } catch (\Exception $e) {
+
+            logger($e);
+            return response(['status' => 'error', 'message' => $e->getMessage()]);
+
+        }
     }
 }
