@@ -210,7 +210,7 @@
                 <li class="{{ setSidebarActive(['admin.hero.index']) }}"><a class="nav-link" href="{{ route('admin.hero.index') }}">Hero</a></li>
             </ul>
             </li>
-            <li class="dropdown {{ setSidebarActive(['category.*','location.*','amenity.*']) }}">
+            <li class="dropdown {{ setSidebarActive(['category.*','location.*','amenity.*','arts.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-palette"></i> <span>Arts</span></a>
 
@@ -218,6 +218,7 @@
                 <li class="{{ setSidebarActive(['category.*']) }}"><a class="nav-link" href="{{ route('category.index') }}">Category</a></li>
                 <li class="{{ setSidebarActive(['location.*']) }}" ><a class="nav-link" href="{{ route('location.index') }}">Location</a></li>
                 <li  class="{{ setSidebarActive(['amenity.*']) }}"><a class="nav-link" href="{{ route('amenity.index') }}">Amenities</a></li>
+                <li  class="{{ setSidebarActive(['arts.*']) }}"><a class="nav-link" href="{{ route('arts.index') }}">All Arts</a></li>
 
             </ul>
             </li>

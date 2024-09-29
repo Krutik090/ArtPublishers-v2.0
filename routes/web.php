@@ -2,6 +2,7 @@
 
 //Admin
 use App\Http\Controllers\admin\AmenitiyController;
+use App\Http\Controllers\admin\ArtController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HeroController;
 use App\Http\Controllers\admin\LocationController;
@@ -87,6 +88,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Amenity Routes
         Route::resource('amenity',AmenitiyController::class)->except(['show']);
+
+        // Arts Routes
+        Route::resource('arts',ArtController::class)->except(['show']);
     });
 
 });
