@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\ImageGallery;
-use App\Traits\FileUploadTrait;
-use Illuminate\Http\Request;
 use App\Models\Arts;
+use App\Models\ImageGallery;
+use Illuminate\Http\Request;
+use App\Traits\FileUploadTrait;
 
-class ImageGalleryController extends Controller
+class UserImageGalleryController extends Controller
 {
     use FileUploadTrait;
     /**
@@ -18,7 +18,16 @@ class ImageGalleryController extends Controller
     {
         $images = ImageGallery::where('art_id', $request->id)->get();
         $arttitle = Arts::select('title')->where('id',$request->id)->first();
-        return view('admin.image-gallery.index',compact('images','arttitle'));
+        return view('frontend.dashboard.arts.Image-Gallery.index',compact('images','arttitle'));
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -49,6 +58,14 @@ class ImageGalleryController extends Controller
         toastr()->success("Uploaded Successfully");
 
         return redirect()->back();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
     }
 
     /**

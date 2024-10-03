@@ -21,10 +21,9 @@
                     <div class="footer_text">
                         <h3>My Account</h3>
                         <ul class="footer_link">
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> login</a></li>
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> register</a></li>
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> change password</a></li>
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> forget password</a></li>
+                            <li><a href="{{ route('account.login') }}"><i class="far fa-chevron-double-right"></i> login</a></li>
+                            <li><a href="{{ route('account.register') }}"><i class="far fa-chevron-double-right"></i> register</a></li>
+                            <li><a href="{{  route('account.password.request')  }}"><i class="far fa-chevron-double-right"></i> forget password</a></li>
                         </ul>
                     </div>
                 </div>
@@ -32,10 +31,10 @@
                     <div class="footer_text">
                         <h3>Helpful Links</h3>
                         <ul class="footer_link">
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> FAQ</a></li>
+                            {{-- <li><a href="#"><i class="far fa-chevron-double-right"></i> FAQ</a></li>
                             <li><a href="#"><i class="far fa-chevron-double-right"></i> Feedbacek</a></li>
                             <li><a href="#"><i class="far fa-chevron-double-right"></i> report</a></li>
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> contact</a></li>
+                            <li><a href="#"><i class="far fa-chevron-double-right"></i> contact</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -43,9 +42,9 @@
                     <div class="footer_text">
                         <h3>Information</h3>
                         <ul class="footer_link">
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> blog</a></li>
+                            {{-- <li><a href="#"><i class="far fa-chevron-double-right"></i> blog</a></li>
                             <li><a href="#"><i class="far fa-chevron-double-right"></i> Testimonial</a></li>
-                            <li><a href="#"><i class="far fa-chevron-double-right"></i> Tetss</a></li>
+                            <li><a href="#"><i class="far fa-chevron-double-right"></i> Tetss</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -54,12 +53,12 @@
                         <h3>Information</h3>
                         <ul class="footer_link">
                             <li>
-                                <p><i class="far fa-map-marker-alt"></i> San Francisco City Hall, San Francisco</p>
+                                <p><i class="far fa-map-marker-alt"></i> Anand, Gujrat.</p>
                             </li>
-                            <li><a href="#"><a href="mailto:example@gmail.com"><i class="fal fa-envelope"></i>
-                                        example@gmail.com</a></li>
-                            <li><a href="#"><a href="callto:+6985224411026"><i class="fal fa-phone-alt"></i>
-                                        +6985224411026</a></li>
+                            <li><a href="#"><a href="mailto:krutikthakar2539@gmail.com"><i class="fal fa-envelope"></i>
+                                krutikthakar2539@gmail.com</a></li>
+                            <li><a href="#"><a href="callto:+9328068456"><i class="fal fa-phone-alt"></i>
+                                        +91 9328068456</a></li>
                         </ul>
                     </div>
                 </div>
@@ -69,7 +68,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-md-5">
-                        <p>&#64; 2021 <a href="#">DB.Card</a> All Rights Reserved.</p>
+                        <p>{{ date('Y') }} <a href="#"></a> All Rights Reserved.</p>
                     </div>
                     <div class="col-xl-6 col-md-7">
                         <ul class="footer_bottom_link">

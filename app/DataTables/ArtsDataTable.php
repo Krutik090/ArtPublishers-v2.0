@@ -27,7 +27,7 @@ class ArtsDataTable extends DataTable
                 $delete = '<a href="' . route('arts.destroy', $query->id) . '" class="delete-item btn btn-md btn-danger ml-3" ><i class="fas fa-trash-alt"></i></a>';
 
                 $more = '<div class="btn-group dropleft">
-                      <button type="button" class="btn btn-md ml-2 btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <button type="button" class="btn btn-sm ml-2 btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-cog"></i>
                       </button>
                       <div class="dropdown-menu dropleft">

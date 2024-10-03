@@ -1,4 +1,5 @@
 @extends('frontend.layouts.master')
+
 @section('contents')
     <!--==========================
             BREADCRUMB PART START
@@ -11,7 +12,7 @@
                         <h4>sign in</h4>
                         <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#"> Home </a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}"> Home </a></li>
                                 <li class="breadcrumb-item active" aria-current="page"> sign in </li>
                             </ol>
                         </nav>
@@ -52,18 +53,17 @@
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="wsus__login_imput wsus__login_check_area">
-                                        <div class="form-check">
+                                        {{-- <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="remember" value=""
                                                 id="flexCheckDefault">
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 Remeber Me
                                             </label>
-                                        </div>
+                                        </div> --}}
 
                                         @if (Route::has('account.password.request'))
                                         <a href="{{ route('account.password.request') }}" class="link-secondary text-decoration-none">Forgot Password?</a>
                                         @endif
-
 
                                     </div>
                                 </div>

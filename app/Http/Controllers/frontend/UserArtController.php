@@ -1,33 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\frontend;
 
 use App\DataTables\ArtsDataTable;
+use App\DataTables\UserArtsDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\ArtsStoreRequest;
-use App\Http\Requests\admin\ArtUpdateRequest;
-use App\Models\Amenity;
-use App\Models\ArtAmenities;
-use App\Models\Arts;
-use App\Traits\FileUploadTrait;
-use Illuminate\Http\JsonResponse;
+use App\Http\Requests\frontend\UserArtStoreRequest;
+use App\Http\Requests\frontend\UserArtUpdateRequest;
+use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use App\Models\Location;
-use illuminate\Support\Facades\Auth;
+use App\Models\Amenity;
+use App\Models\ArtAmenities;
+use App\Traits\FileUploadTrait;
 use Str;
+use App\Models\Arts;
+use Illuminate\Support\Facades\Auth;
 
-class ArtController extends Controller
+
+
+class UserArtController extends Controller
 {
-
     use FileUploadTrait;
     /**
      * Display a listing of the resource.
      */
-    public function index(ArtsDataTable $dataTable): View|JsonResponse
+    public function index(UserArtsDataTable $dataTable): View|JsonResponse
     {
-        return $dataTable->render('admin.arts.index');
+        return $dataTable->render('frontend.dashboard.arts.index');
     }
 
     /**
@@ -35,25 +38,27 @@ class ArtController extends Controller
      */
     public function create()
     {
+
         $category = Category::all();
         $location = Location::all();
         $amenity = Amenity::all();
-
-        return view('admin.Arts.create', compact('category', 'location', 'amenity'));
+        return view('frontend.dashboard.arts.create',compact('category', 'location', 'amenity'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ArtsStoreRequest $request)
+    public function store(UserArtStoreRequest $request)
     {
+
         $imagePath = $this->uploadImage($request, 'image');
         $thumbanilPath = $this->uploadImage($request, 'thb_image');
         $attachmentPath = $this->uploadImage($request, 'attachment');
 
+
         $art = new Arts();
-        $art->user_id = Auth::guard('admin')->user()->id;
         $art->image = $imagePath;
+        $art->user_id = Auth::user()->id;
         $art->thumbnail = $thumbanilPath;
         $art->title = $request->title;
         $art->slug = Str::slug($request->title);
@@ -76,24 +81,31 @@ class ArtController extends Controller
         $art->is_featured = $request->is_featured;
         $art->is_verified = $request->is_verified;
         $art->expire_date = date('Y-m-d');
-        $art->is_approved = $request->is_approved;
 
         $art->save();
 
-        if (!empty($request->amenities)) {
+        if(!empty($request->amenities)){
             foreach ($request->amenities as $amenityId) {
                 $amenity = new ArtAmenities();
                 $amenity->art_id = $art->id;
                 $amenity->amenity_id = $amenityId;
                 $amenity->save();
-            }
+        }
+
 
         }
 
         toastr()->success("Created Successfully");
 
-        return to_route('arts.index');
+        return to_route('account.arts.index');
+    }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
     }
 
     /**
@@ -102,17 +114,22 @@ class ArtController extends Controller
     public function edit(string $id)
     {
         $arts = Arts::findOrFail($id);
+        if(Auth::user()->id != $arts->user_id)
+        {
+            return abort(403);
+        }
         $category = Category::all();
         $location = Location::all();
         $amenity = Amenity::all();
         $artamenity = ArtAmenities::where('art_id', $arts->id)->pluck('amenity_id')->toArray();
-        return view('admin.arts.edit', compact('arts', 'location', 'amenity', 'category', 'artamenity'));
+        return view('frontend.dashboard.arts.edit', compact('arts', 'location', 'amenity', 'category', 'artamenity'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ArtUpdateRequest $request, string $id)
+    public function update(UserArtUpdateRequest $request, string $id)
     {
         $art = Arts::findOrFail($id);
 
@@ -120,7 +137,7 @@ class ArtController extends Controller
         $thumbanilPath = $this->uploadImage($request, 'thb_image', $request->old_thb_image);
         $attachmentPath = $this->uploadImage($request, 'attachment', $request->old_attachment);
 
-        $art->user_id = Auth::guard('admin')->user()->id;
+        $art->user_id = Auth::user()->id;
         $art->image = !empty($imagePath) ? $imagePath : $request->old_image;
         $art->thumbnail = !empty($thumbanilPath) ? $thumbanilPath : $request->old_thb_image;
         $art->title = $request->title;
@@ -143,7 +160,6 @@ class ArtController extends Controller
         $art->status = $request->status;
         $art->is_featured = $request->is_featured;
         $art->is_verified = $request->is_verified;
-        $art->is_approved = true;
         $art->expire_date = date('Y-m-d');
 
         $art->save();
@@ -162,7 +178,7 @@ class ArtController extends Controller
 
         toastr()->success("Updated Successfully");
 
-        return to_route('arts.index');
+        return to_route('account.arts.index');
     }
 
     /**
@@ -170,16 +186,6 @@ class ArtController extends Controller
      */
     public function destroy(string $id)
     {
-        try {
-            Arts::findOrFail($id)->delete();
-
-            return response(['status' => 'success', 'message' => 'Deleted Successfully']);
-
-        } catch (\Exception $e) {
-
-            logger($e);
-            return response(['status' => 'error', 'message' => $e->getMessage()]);
-
-        }
+        //
     }
 }

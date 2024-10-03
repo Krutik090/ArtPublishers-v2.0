@@ -15,6 +15,9 @@ use App\Http\Controllers\admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\frontend\FrontendController;
 use App\Http\Controllers\frontend\ProfileController;
+use App\Http\Controllers\frontend\UserArtController;
+use App\Http\Controllers\frontend\UserImageGalleryController;
+use App\Http\Controllers\frontend\UserVideoGalleryController;
 use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\PasswordResetLinkController;
 use App\Http\Controllers\admin\VideoGalleryController;
@@ -24,16 +27,16 @@ use App\Http\Controllers\LoginController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 
-Route::group(['prefix' => 'account'], function () {
+Route::group(['prefix' => 'account','as' => 'account.'], function () {
     //Guest middleware
     Route::group(['middleware' => 'guest'], function () {
 
-        Route::get('login', [LoginController::class, 'index'])->name('account.login');
-        Route::get('register', [LoginController::class, 'register'])->name('account.register');
-        Route::post('process-register', [LoginController::class, 'processRegister'])->name('account.processRegister');
-        Route::post('authenticate', [LoginController::class, 'authenticate'])->name('account.authenticate');
-        Route::get('password-request', [LoginController::class, 'passwordRequest'])->name('account.password.request');
-        Route::post('resetpassword', [PasswordResetLinkController::class, 'sendResetLinkEmail'])->name('account.password.email');
+        Route::get('login', [LoginController::class, 'index'])->name('login');
+        Route::get('register', [LoginController::class, 'register'])->name('register');
+        Route::post('process-register', [LoginController::class, 'processRegister'])->name('processRegister');
+        Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+        Route::get('password-request', [LoginController::class, 'passwordRequest'])->name('password.request');
+        Route::post('resetpassword', [PasswordResetLinkController::class, 'sendResetLinkEmail'])->name('password.email');
         // Route::get('resetpassword/{token}', [NewPasswordController::class, 'create'])
         //     ->name('password.reset');
 
@@ -45,11 +48,19 @@ Route::group(['prefix' => 'account'], function () {
     // Authenticated middleware
     Route::group(['middleware' => 'auth'], function () {
 
-        Route::get('dashboard', [DashboardController::class, 'index'])->name('account.dashboard');
-        Route::get('profile', [ProfileController::class, 'index'])->name('account.profile');
-        Route::put('profile', [ProfileController::class, 'update'])->name('account.profile.update');
-        Route::put('password-update', [ProfileController::class, 'passwordUpdate'])->name('account.profile.passwordUpdate');
-        Route::get('logout', [LoginController::class, 'logout'])->name('account.logout');
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+        Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::put('password-update', [ProfileController::class, 'passwordUpdate'])->name('profile.passwordUpdate');
+        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+        //Art Routes
+        Route::resource('arts' ,UserArtController::class);
+
+        Route::resource('image-gallery',UserImageGalleryController::class);
+
+        Route::resource('video-gallery',UserVideoGalleryController::class);
+
 
     });
 

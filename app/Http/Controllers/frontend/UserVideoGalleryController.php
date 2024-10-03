@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Arts;
 use App\Models\VideoGallery;
 use Illuminate\Http\Request;
-use App\Models\Arts;
 
-class VideoGalleryController extends Controller
+class UserVideoGalleryController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
@@ -17,7 +16,17 @@ class VideoGalleryController extends Controller
     {
         $videos = VideoGallery::where('art_id',$request->id)->get();
         $arttitle = Arts::select('title')->where('id',$request->id)->first();
-        return view('admin.video-gallery.index',compact('videos','arttitle'));
+        return view('frontend.dashboard.arts.video-Gallery.index',compact('videos','arttitle'));
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+
+
     }
 
     /**
@@ -25,7 +34,6 @@ class VideoGalleryController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'video_url' => ['required','url'],
             'art_id' => ['required'],
@@ -40,6 +48,18 @@ class VideoGalleryController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
 
     /**
      * Remove the specified resource from storage.
