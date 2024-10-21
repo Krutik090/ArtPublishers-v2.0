@@ -44,7 +44,7 @@
                     <h3 class="h5 pt-2">Dashboard</h3>
                 </div>
                 <div class="card-body">
-                    You are logged in !!cbksbkcbnsdc, ,a sm
+                    You are logged in !!
                 </div>
            </div>
         </div>
