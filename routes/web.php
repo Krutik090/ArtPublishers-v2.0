@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\ImageGalleryController;
 use App\Http\Controllers\admin\LocationController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\admin\PendingArtController;
 use App\Http\Controllers\admin\ProfileController as AdminProfileController;
 
 //User
@@ -104,6 +105,10 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Arts Routes
         Route::resource('arts',ArtController::class)->except(['show']);
+
+         // Arts Routes
+        Route::get('pending-arts',[PendingArtController::class,'index'])->name('admin.pending-arts.index');
+        Route::post('pending-arts',[PendingArtController::class,'update'])->name('admin.pending-arts.update');
 
         // Image Gallery Routes
         Route::resource('image-gallery',ImageGalleryController::class)->except(['show']);

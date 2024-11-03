@@ -219,7 +219,7 @@
                 <li class="{{ setSidebarActive(['location.*']) }}" ><a class="nav-link" href="{{ route('location.index') }}">Location</a></li>
                 <li  class="{{ setSidebarActive(['amenity.*']) }}"><a class="nav-link" href="{{ route('amenity.index') }}">Amenities</a></li>
                 <li  class="{{ setSidebarActive(['arts.*']) }}"><a class="nav-link" href="{{ route('arts.index') }}">All Arts</a></li>
-
+                <li  class="{{ setSidebarActive(['arts.*']) }}"><a class="nav-link" href="{{ route('admin.pending-arts.index') }}">Pending Arts</a></li>
             </ul>
             </li>
             <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>

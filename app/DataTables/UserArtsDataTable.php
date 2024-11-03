@@ -69,7 +69,7 @@ class UserArtsDataTable extends DataTable
                 } else {
                     $is_approved = '';
                 }
-                return $status . $featured . $verified.$is_approved;
+                return $status . $featured . $verified. $is_approved;
 
             })
 
