@@ -70,7 +70,7 @@
                                             <th scope="row">{{ ++$loop->index }}</th>
                                             <td><img src="{{ asset($image->image) }}" class="mt-2"
                                                     style="width: 210px !important  " alt=""></td>
-                                            <td><a href="{{ route('image-gallery.destroy', $image->id) }}"
+                                            <td><a href="{{ route('account.image-gallery.destroy', $image->id) }}"
                                                     class="btn delete-item btn-md btn-danger"><i
                                                         class="fas fa-trash-alt"></i></a></td>
                                         </tr>

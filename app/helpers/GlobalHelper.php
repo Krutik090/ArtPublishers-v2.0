@@ -28,5 +28,11 @@ if(!function_exists('getThumbnail')){
     }
 }
 
+if(!function_exists('truncate')){
+    function truncate(string $text, int $limit = 25)
+    {
+        return \Str::of($text)->limit($limit);
+    }
+}
 
 

@@ -73,7 +73,7 @@ class UserArtsDataTable extends DataTable
 
             })
 
-            ->rawColumns(['status', 'action', 'is_featured', 'is_verified'])
+            ->rawColumns(['status', 'action', 'is_featured', 'is_verified','is_approved'])
             ->setRowId('id');
     }
 

@@ -18,7 +18,20 @@
     <link rel="stylesheet" href="//cdn.datatables.net/2.1.7/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
+    {{-- <style>
+        .modal-content {
+            max-height: 90vh;
+            /* Limits modal height to 90% of viewport height */
+            overflow-y: auto;
+            /* Adds scroll if content exceeds max-height */
+        }
 
+        .modal-body {
+            max-height: 75vh;
+            /* Controls modal body height for scrollability */
+            overflow-y: auto;
+        } --}}
+    </style>
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
     @stack('styles')
 </head>
@@ -51,6 +64,28 @@
         FOOTER PART END
     ===========================-->
 
+    <!--==========================
+        Listing MODEL PART START
+    ===========================-->
+
+    <section id="wsus__map_popup">
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="btn-close popup_close" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="far fa-times"></i></button>
+                    <div class="modal-body model-art-content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--==========================
+        Listing MODEL PART END
+    ===========================-->
 
     <!--=============SCROLL BTN==============-->
     <div class="scroll_btn">
@@ -86,7 +121,6 @@
     <!--main/custom js-->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script>
-
         @if (session('success'))
             toastr.success("{{ session('success') }}");
         @endif
@@ -96,10 +130,7 @@
                 toastr.error("{{ $error }}")
             @endforeach
         @endif
-
-
     </script>
-    @stack('scripts')
 
 
     <script>
@@ -110,6 +141,38 @@
         @endif
     </script>
 
+
+
+    <script>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error("{{ $error }}")
+            @endforeach
+        @endif
+    </script>
+
+    <script>
+        function showArtModel(id) {
+            $.ajax({
+                method: 'GET',
+                url: '{{ route('arts-model', ':id') }}'.replace(":id", id),
+                data: {},
+                beforeSend: function() {
+                    $('.model-art-content').html(
+                        `<div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>`
+                    )
+
+                },
+                success: function(response) {
+                    $('.model-art-content').html(response)
+                },
+                error: function(xhr, status, error) {
+                    console.log(error)
+                }
+            })
+        }
+    </script>
+    @stack('scripts')
 </body>
 
 </html>

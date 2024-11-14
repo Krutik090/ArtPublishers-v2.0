@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\PendingArtController;
 use App\Http\Controllers\admin\ProfileController as AdminProfileController;
 
 //User
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\frontend\FrontendController;
 use App\Http\Controllers\frontend\ProfileController;
@@ -27,6 +28,10 @@ use App\Http\Controllers\LoginController;
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('arts',[FrontendController::class,'arts'])->name('arts');
+Route::get('arts-model/{id}',[FrontendController::class,'artsmodel'])->name('arts-model');
+Route::get('arts/{slug}',[FrontendController::class,'showArts'])->name('arts.show');
+Route::post('art-review',[FrontendController::class,'submitReview'])->name('art-review.store')->middleware('auth');
 
 Route::group(['prefix' => 'account','as' => 'account.'], function () {
     //Guest middleware
@@ -115,6 +120,12 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Image Gallery Routes
         Route::resource('video-gallery',VideoGalleryController::class)->except(['show']);
+
+        //Arts Review
+        Route::get('/art-reviews',[ReviewController::class,'index'])->name('admin.art-review.index');
+        Route::get('/art-reviews/{id}',[ReviewController::class,'updatestatus'])->name('admin.art-review.update');
+        Route::delete('/art-reviews/{id}',[ReviewController::class,'destroy'])->name('admin.art-review.destroy');
+
     });
 
 });

@@ -151,7 +151,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="google_map">Google Map Embed Code <span
-                                        class="text-danger"></span></label>
+                                        class="text-danger">(size: 850 x 400)</span></label>
                                 <textarea name="google_map" id="google_map" class="form-control" cols="30" rows="10"></textarea>
 
                             </div>

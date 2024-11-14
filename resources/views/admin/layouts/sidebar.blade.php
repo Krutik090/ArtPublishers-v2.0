@@ -210,7 +210,7 @@
                 <li class="{{ setSidebarActive(['admin.hero.index']) }}"><a class="nav-link" href="{{ route('admin.hero.index') }}">Hero</a></li>
             </ul>
             </li>
-            <li class="dropdown {{ setSidebarActive(['category.*','location.*','amenity.*','arts.*']) }}">
+            <li class="dropdown {{ setSidebarActive(['category.*','location.*','amenity.*','arts.*','admin.pending-arts.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <i class="fas fa-palette"></i> <span>Arts</span></a>
 
@@ -219,7 +219,8 @@
                 <li class="{{ setSidebarActive(['location.*']) }}" ><a class="nav-link" href="{{ route('location.index') }}">Location</a></li>
                 <li  class="{{ setSidebarActive(['amenity.*']) }}"><a class="nav-link" href="{{ route('amenity.index') }}">Amenities</a></li>
                 <li  class="{{ setSidebarActive(['arts.*']) }}"><a class="nav-link" href="{{ route('arts.index') }}">All Arts</a></li>
-                <li  class="{{ setSidebarActive(['arts.*']) }}"><a class="nav-link" href="{{ route('admin.pending-arts.index') }}">Pending Arts</a></li>
+                <li  class="{{ setSidebarActive(['admin.pending-arts.*']) }}"><a class="nav-link" href="{{ route('admin.pending-arts.index') }}">Pending Arts</a></li>
+                <li  class="{{ setSidebarActive(['admin.art-review.index']) }}"><a class="nav-link" href="{{ route('admin.art-review.index') }}">Art Reviews</a></li>
             </ul>
             </li>
             <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>

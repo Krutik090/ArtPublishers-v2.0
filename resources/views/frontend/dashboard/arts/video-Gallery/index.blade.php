@@ -74,7 +74,7 @@
                                                 <a target="_blank" href="{{ $video->video_url }}">{{ $video->video_url }} </a>
                                             </td>
                                             <td>
-                                                <a href="{{ route('video-gallery.destroy', $video->id) }}"
+                                                <a href="{{ route('account.video-gallery.destroy', $video->id) }}"
                                                     class="btn delete-item btn-md btn-danger">
                                                     <i class="fas fa-trash-alt"> </i>
                                                 </a>

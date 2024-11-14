@@ -5,10 +5,10 @@
             <div class="section-header-back">
                 <a href="{{ route('admin.dashboard') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
             </div>
-            <h1>Pending Arts</h1>
+            <h1>Arts</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
-                <div class="breadcrumb-item">Pending Arts</div>
+                <div class="breadcrumb-item">Reviews</div>
             </div>
         </div>
 
@@ -17,8 +17,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Pending Arts</h4>
+                            <h4>All Reviews</h4>
                         </div>
+
                         <div class="card-body">
                             {{ $dataTable->table() }}
                         </div>
@@ -34,46 +35,17 @@
 @push('scripts')
 
         {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-
-        {{-- <script>
-             $('body').on('change','.approve', function(e) {
-                let id = $(this).data('id');
-                let value = $(this).val();
-                alert(value);
-                $.ajax({
-                    method: 'POST',
-                    url : '{{ route("admin.pending-arts.update") }}',
-                    data: {
-                        _token:"{{ csrf_token() }}",
-                        id:id,
-                        value:value
-                    },
-                    success: function(response){
-
-                        if(response.status === "success"){
-                            toastr.success(response.message);
-                        }else{
-                            toastr.error(response.message);
-                        }
-                    },error: function(error){
-                        console.log(error);
-                    }
-                })
-            })
-        </script> --}}
         <script>
-            $('body').on('change', '.approve', function(e) {
+            $(document).ready(function(){
+
+                $('body').on('change', '.update-status', function(e) {
                 let id = $(this).data('id');
-                let value = $(this).val();
+
 
                 $.ajax({
-                    method: 'POST',
-                    url: '{{ route("admin.pending-arts.update") }}',
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        id: id,
-                        value: value
-                    },
+                    method: 'GET',
+                    url: '{{ route("admin.art-review.update",":id") }}'.replace(":id",id),
+                    data: {},
                     success: function(response) {
                         if (response.status === "success") {
                             toastr.success(response.message);
@@ -81,13 +53,14 @@
                             toastr.error(response.message);
                         }
                     },
-                    error: function(error) {
+                    error: function(xhr, status, error) {
                         console.log(error);
                         toastr.error("An error occurred. Please check the console for more details.");
                     }
                 });
             });
-        </script>
+            })
 
+        </script>
 
 @endpush

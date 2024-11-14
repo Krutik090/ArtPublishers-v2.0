@@ -57,7 +57,7 @@
                         <a class="nav-link" href="about.html">about</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="listing_grid_view.html">Arts</a>
+                        <a class="nav-link" href="{{ route('arts') }}">Arts</a>
                     </li>
                     {{-- <li class="nav-item">
                            <a class="nav-link" href="pricing.html">pricing</a>
@@ -81,7 +81,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="contact.html">contact us</a>
                     </li>
+                    @auth
 
+                    @endauth
+                        <li><a href="{{ route('account.dashboard') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
                     @guest
                         <!-- Show Login button if the user is not authenticated -->
                         <li><a href="{{ route('account.login') }}"><i class="fas fa-user"></i> Login</a></li>

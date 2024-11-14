@@ -48,7 +48,7 @@ class PendingArtsDataTable extends DataTable
             ->addColumn('status', function ($query) {
                $html = '<select class="approve form-control" data-id="'.$query->id.'">
                <option value = "0">Pending</option>
-               <option value = "1">Approve</option>
+               <option value = "1">Approved</option>
                </select>';
 
                return $html;

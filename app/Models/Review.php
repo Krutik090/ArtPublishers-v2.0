@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ArtAmenities extends Model
+class Review extends Model
 {
     use HasFactory;
-    function amenity():BelongsTo{
-        return $this->belongsTo(Amenity::class,'amenity_id','id');
+
+    function art(): BelongsTo{
+        return $this->belongsTo(Arts::class);
+    }
+    function user(): BelongsTo{
+        return $this->belongsTo(User::class);
     }
 }
