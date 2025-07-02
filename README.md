@@ -47,11 +47,9 @@ Below is a complete, production‑ready **`README.md`** plus an **MIT `LICENSE`*
 
 ## 🗂 Directory Map
 
-```
 
 <pre lang="markdown"> ``` ArtPublishers-v2.0 ├─ app/ # Models, controllers, jobs, policies ├─ resources/ │ ├─ views/ # Blade templates (frontend & admin) │ └─ js/, css/ # Vite assets ├─ routes/ │ └─ web.php # All HTTP routes ├─ public/ # Publicly served assets ├─ database/ │ ├─ migrations/ # Schema │ └─ seeders/ # Optional demo data ├─ .env.example # Sample environment file ├─ composer.json # PHP dependencies & autoload └─ package.json # Node / Vite build ``` </pre>
 
-````
 
 ---
 
